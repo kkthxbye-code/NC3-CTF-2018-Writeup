@@ -71,7 +71,7 @@ Part 3:
 >Opgaven er også blevet løst ved ren analyse af den krypterede fil.
 
 **Solution:** 
-Again, IDA does a great job and makes it almost too easy, especially with the decompiler.
+We get an .exe and a file with the encrypted data. Again, IDA does a great job and makes it almost too easy, especially with the decompiler.
 
 In main, the second function call is the relevant one:
 
@@ -115,3 +115,28 @@ for x in data:
 Works.
 
 **Flag:** NC3{kan_du_lide_min_kryptering??}
+
+## 450 - Kan du dekode?
+
+**Description:** 
+>Bad guys og deres kodeordsbeskyttede sider.
+
+**Solution:** 
+
+You are given a .php file that takes a password and decrypts the data in the $krypteret_indhold variable.
+
+The relevant part of the code is this:
+
+```php
+for($i = 0; $i < strlen($krypteret_indhold); $i++)
+{
+	$currentKodeordChar = ord($kodeord[$i % strlen($kodeord)]);
+	$dekrypteret_indhold .= chr( (ord($krypteret_indhold[$i]) ^ $currentKodeordChar) % 256 );
+}
+```
+
+This is a simple repeating key XOR encryption. This type of XOR encryption is vulnerable to known [known plaintext attacks](https://en.wikipedia.org/wiki/Known-plaintext_attack). To break it I used the first and best crib-dragging script I found ([here](https://github.com/SpiderLabs/cribdrag)). Crib dragging is the process of taking a known plaintext, XOR'ing it at all possible offsets and looking for familiar text in the key. 
+
+Call the script with the data from $krypteret_indhold and start by guessing that NC3{ is a part of the decrypted text. Enter it into the script when it asks for the crib. There are 110 possible offsets with this key length. If inserted at line 48, the resulting key would be 'gern', this could be a danish word 'gerne'. Save it as a part of the message, then try to enter 'gerne' as the crib. At offset 6 we see '\<bod'. This looks like HTML, lets save it and try to enter <body>. Here we find 'gernein' as a part of the key. From here I actually just guessed the rest, as letmein is a common password. So the password is 'jegvilgerneind'. Decrypt the string and you get some HTML with a flag.
+
+**Flag:** NC3{dekodning_af_kodede_php_bytes}
