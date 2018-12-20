@@ -160,3 +160,19 @@ MUHAAAAA!!!
 Open the link and use guldjul as password. The flag looks like this: AP3{avffre_cå_yvawra__iv_fre_serz_gvy_jevgrhcf}. This is clearly rot13. Just rot13 it and get the flag.
 
 **Flag:**  NC3{nisser_på_linjen__vi_ser_frem_til_writeups}
+
+## 150 - wallet
+
+**Description:** Bit bit
+
+You are provided a wallet.dat file. It is a bitcoin wallet. Just grep or otherwise dump the bitcoin addresses, there should be three or something like that. Look them up on blockchain.com. Keep following the transactions (outgoing) until you find a transaction with data hidden in the output scripts (didn't write it down, just click around). The transaction should be ce4c5dfe1f0ec95d7ed5030bb9954f8950455b1fdd0849471c76ac09502b2b1a. Remember to press "Show scripts & coinbase" on blockhain.com.
+
+Here you will find the following data:
+´´´
+RETURN PUSHDATA(57)[455720466c61673a20546b4d7a6532357063334e6c626e4e665347463359576c705832526c6347397a61585266595752795a584e7a5a58303d]
+(decoded) EW Flag: TkMze25pc3NlbnNfSGF3YWlpX2RlcG9zaXRfYWRyZXNzZX0=
+´´´
+
+Base64 decode and get the flag.
+
+**Flag:**  NC3{nissens_Hawaii_deposit_adresse}
