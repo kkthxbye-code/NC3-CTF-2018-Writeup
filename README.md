@@ -2,6 +2,7 @@
 
 I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly). These are some very quick writeups, so not very indepth.
 
+# Reversing
 ## 10 - Indledning
 
 **Description:** Hvordan mon kodenissen klarer den her?
@@ -140,3 +141,22 @@ This is a simple repeating key XOR encryption. This type of XOR encryption is vu
 Call the script with the data from $krypteret_indhold and start by guessing that NC3{ is a part of the decrypted text. Enter it into the script when it asks for the crib. There are 110 possible offsets with this key length. If inserted at line 48, the resulting key would be 'gern', this could be a danish word 'gerne'. Save it as a part of the message, then try to enter 'gerne' as the crib. At offset 6 we see '\<bod'. This looks like HTML, lets save it and try to enter \<body\>. Here we find 'gernein' as a part of the key. From here I actually just guessed the rest, as letmein is a common password. So the password is 'jegvilgerneind'. Decrypt the string and you get some HTML with a flag.
 
 **Flag:** NC3{dekodning_af_kodede_php_bytes}
+
+# Misc
+
+## 150 - breach_nem
+
+**Description:** Der blev opfanget noget trafik på kablerne ...
+
+Open the pcap file with wireshark. Find the first TCP package, right click -> follow -> tcp stream. Cycle the streams until you find this conversation:
+
+>har du noget til mig?
+guldjul
+eh?
+https://ghostbin.com/paste/jnmo7kys
+MUHAAAAA!!!
+:)
+
+Open the link and use guldjul as password. The flag looks like this: AP3{avffre_cå_yvawra__iv_fre_serz_gvy_jevgrhcf}. This is clearly rot13. Just rot13 it and get the flag.
+
+**Flag:**  NC3{nisser_på_linjen__vi_ser_frem_til_writeups}
