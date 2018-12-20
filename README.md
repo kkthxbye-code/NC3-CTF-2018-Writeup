@@ -3,7 +3,6 @@
 I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly). These are some very quick writeups, so not very indepth.
 
 ## 10 - Indledning
----
 
 **Description:** Hvordan mon kodenissen klarer den her?
 **Hint:** Use the Force luke!
@@ -17,7 +16,6 @@ Obviously just reverse the string.
 **Flag:**  NC3{saa_simpelt}
 
 ## 50 - Små Skridt
----
 
 **Description:** Lad os skrue lidt op for sværhedsgraden.
 **Hint:** Baggrundslæsning: https://en.wikipedia.org/wiki/Bitwise_operation#XOR
@@ -40,7 +38,6 @@ bin = b64decode("zsOz+/Nl3+Xy3/bp3+nf5+Hu5/0=")
 **Flag:** NC3{så_er_vi_i_gang}
 
 ## 200 - nisse.elf
----
 
 **Description:** En livlig nisse har lavet en crackme, som han rigtig gerne vil vise frem.
 **Hint:** Strings/Grep e.l. er ikke nok. Prøv at åbne filen i en disassembler, f.eks. Ida Pro Free. Assemblerkoden har symboler, dvs. programmørens funktionsnavne er synlige. Ud fra dette kan man udlede hvilken funktion, der tjekker for den mellemste del af flaget.
@@ -62,3 +59,59 @@ Part 3:
 
 
 **Flag:** NC3{koden_er_fin__nc3__og_nu_er_den_min}
+
+## 400 - Fi1eCrypter
+
+**Description:** 
+>Åh nej! En unavngiven person har fået fingrene i noget ransomware. Umiddelbart går den MEGET målrettet efter noget på ofrets computer.
+>Vi har fået adgang til en krypteret fil. Kan du dekryptere den?
+
+**Hint:** 
+>En disassembler (såsom Ida Pro Free) kan bruges. Dog er der ikke symboler i .exe-filen, dvs. man skal læse lidt mere af assemblerkoden før man når til krypteringen. Denne kryptering skal derefter "reverses", dvs. gøres i omvendt rækkefølge.
+>Opgaven er også blevet løst ved ren analyse af den krypterede fil.
+
+**Solution:** 
+Again, IDA does a great job and makes it almost too easy, especially with the decompiler.
+
+In main, the second function call is the relevant one:
+
+`.text:0000000140001330                 call    sub_140001000`
+
+If we take a quick look at the function, we want to find something that loops over data. The following is the first tight loop, which also does add and xor, which looks promising:
+
+```asm
+loc_1400010E0:
+mov     eax, edx
+vpaddb  xmm1, xmm3, [rsp+rax+460h+Buffer]
+vpxor   xmm2, xmm1, xmm4
+vmovdqu [rsp+rax+460h+Buffer], xmm2
+lea     eax, [rdx+10h]
+add     edx, 20h
+vpaddb  xmm1, xmm3, [rsp+rax+460h+Buffer]
+vpxor   xmm2, xmm1, xmm4
+vmovdqu [rsp+rax+460h+Buffer], xmm2
+cmp     edx, r9d
+jb      short loc_1400010E0
+```
+
+Don't let the vector registers scare you. If we check out what the vpaddb and vpxor instructions add and xor with, we find the following:
+
+```asm
+.rdata:0000000140016360 xmmword_140016360 xmmword 1010101010101010101010101010101h
+.rdata:0000000140016370 xmmword_140016370 xmmword 90909090909090909090909090909090h
+```
+
+Let's just try to decrypt the content of the file, doing this in reverse:
+
+data = open("encrypted_flag.txt.ENCRYPTED", "rb").read()
+
+```python
+for x in data:
+	x = x^0x90
+	x = x-0x01
+	print(chr(x&0xff), end="")
+```
+
+Works.
+
+**Flag:** NC3{kan_du_lide_min_kryptering??}
