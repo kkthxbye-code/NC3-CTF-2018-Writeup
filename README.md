@@ -215,3 +215,36 @@ Velfortjent flag: OLEOKIANJLDOOAEFIJCMOGEDJCDHMNGIKEABMLGOLPBKOAEFIJCMOGEDJCDHMN
 This was the night before the CTF ended, didn't have anymore time, so I just gave up.
 
 **Flag:**  ???
+
+# Analyse
+## 150 - nem
+
+**Description:** Datagraveri. Julemanden har fundet en ny måde at gemme kodeordet til slikskabet. Bemærk at flaget starter med småt: nc3{
+
+**Hint:** Der er kun en relevant kolonne med tal - resten er junk.
+
+I did this one before the hint. You get a csv file with about 100 columns and 10001 rows. The first column contains random chars in the printable range. The rest of the columns contains numbers between 10001. So the numbers should obviously be replace with the chars, this can be done like this:
+
+```python
+import csv
+
+data = open("analyse_nem.csv")
+output = open("output.csv", "w+")
+csv_reader = csv.reader(data, delimiter=";")
+csv_writer = csv.writer(output, delimiter=";")
+
+chars = [row[0] for row in csv_reader]
+data.seek(0)
+data = [row[1:] for row in csv_reader]
+
+for row in data:
+	row = [chars[round(float(x.replace(",", ".")))-1] for x in row]
+
+	csv_writer.writerow(row)
+```
+
+You can open the resultant csv in excel (I was lazy) and then just look at the columns until you find one that starts with nc3{ downwards.
+
+**Flag:**  nc3{The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far. H.P. Lovecraft}
+
+
