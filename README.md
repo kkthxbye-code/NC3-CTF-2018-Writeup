@@ -161,7 +161,7 @@ Open the link and use guldjul as password. The flag looks like this: AP3{avffre_
 
 **Flag:**  NC3{nisser_på_linjen__vi_ser_frem_til_writeups}
 
-## 150 - wallet
+## 350 - wallet
 
 **Description:** Bit bit
 
