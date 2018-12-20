@@ -176,3 +176,42 @@ RETURN PUSHDATA(57)[455720466c61673a20546b4d7a6532357063334e6c626e4e665347463359
 Base64 decode and get the flag.
 
 **Flag:**  NC3{nissens_Hawaii_deposit_adresse}
+
+## 500 - breach
+
+**Description:** Åh åhh, breached! Der blev opfanget noget trafik på kablerne som måske er nyttigt ...
+
+**Hint:** Programmets korrekte output er store bogstaver mellem A-P.
+
+**Solution:**
+I almost finished this, but the CTF stopped, so I lost interest. I'll describe the reversing part briefly.
+
+You get a wireshark file again. Find the HTTP requests, until you find a file download. Save the binary, which is a mips64 (BE) binary for Linux.
+
+To run the .exe you can use qemu-mips64-static file.elf <input>. The program outputs:
+
+>CRUnCH1NG ...
+Velfortjent flag: <124 char long string of characters>.
+
+To reverse the file you can run the binary with qemu-mips64-static -g port file.elf <input> and then remotely attach from IDA Pro (Both gdb-multiarch and radare2 didn't work for me with mips64 big endian).
+
+After using way too much time stepping through the code in IDA Pro ... which like gdb and radare2 is not really happy about debugging mips64, some registers are misnamed, causing crashes if you hover over them, you have to add your own memory maps for stack and heap, etc. Anyway, after using way too much time, find that the decryption function is at 0000000120003E50, then just reverse it:
+
+![Reversed](https://i.imgur.com/uP8BcMg.png "Reversed")
+
+Okay, so it's basically just repeating XOR with a little change:
+```
+encrypted_char += 0x18
+res = x ^ password_char
+res = res-1
+```
+
+After some trial and error, and after reading the hint that I missed, I first identified the password length, then I just bruteforced each character in the 23 char password, as the search space for each is pretty low (the result has to be between A and P). This gave the password julemandenkommertilbyen, which results in the following output:
+
+```
+Velfortjent flag: OLEOKIANJLDOOAEFIJCMOGEDJCDHMNGIKEABMLGOLPBKOAEFIJCMOGEDJCDHMNGIJCDHPFFAJJDMHPNKBLLOHONLBCLHHLNOBMLJEDOGCJIMFMPJDAJFGPMKDAJFEGODCPIKHANFADKGGGMDBELBELOOCNIIFPPKDKJPFHPCAIKNHMNJBFLAHJNMCGIDFBPECDIGEKOPDOJLFLPOCOILFOPLCNIIFAPF
+```
+
+This was the night before the CTF ended, didn't have anymore time, so I just gave up.
+
+**Flag:**  ???
