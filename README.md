@@ -247,4 +247,50 @@ You can open the resultant csv in excel (I was lazy) and then just look at the c
 
 **Flag:**  nc3{The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far. H.P. Lovecraft}
 
+## 250 - whosdaboss
 
+**Description:** Julemanden havde fået mistanke om et hemmeligt netværk af sortnisser, der forsøgte at overtage gaveproduktionen og sælge den til højestbydende kapitalfond. Men hvem er lederen af netværket?
+
+No idea, this was the most frustrating challenge for me, as I am sure I was just missing something simple.
+
+**Flag:**  ???
+
+## 400 - svær
+
+**Description:** Endnu mere datagraveri. Var en kolonne ikke nok? Julemanden måtte gøre koden til slikskabet endnu sværere.
+
+Again, no idea.
+
+# Forensics
+
+## 75 - agurker_svær
+
+**Description:** Nisserne siger at man med fordel kan løse den anden agurk først. Men what, den her giver jo færre point, men skulle være sværere? Makes no sense at all
+
+**Solution:**
+You get a binary file. I have no idea how you are supposed to solve this, but it looks like some sort of struct. What I did was look at the hex, split it by '94', so you end up with something like this (header removed and the top line after):
+
+```
+944b118c023734
+944b018c023030
+944b038c023433
+944b058c023762
+944b0a8c023663
+944b068c023530
+944b028c023465
+944b078c023639
+944b0d8c023532
+944b098c023662
+944b0f8c023735
+944b0b8c023635
+944b048c023333
+944b0c8c023566
+944b0e8c023533
+944b088c023633
+944b128c023731
+    xx  zzyyyy
+```
+
+xx in the above is an index, so sort (hex) by these values. zz is the length of the numbers after (2 in this case for two hex bytes). yyyy are the numbers we care about (after sort). Copy all these hex values, do hex to char on them, then you'll get something like this: 004e43337b5069636b6c655f5253757471. Then hex to char them again, and you'll get: NC3{Pickle_RSutq - which is the flag.
+
+**Flag:** NC3{Pickle_RSutq
