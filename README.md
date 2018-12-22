@@ -6,6 +6,7 @@ I participated in the NC3 Christmas CTF under the name telenor (I was the only o
 ## 10 - Indledning
 
 **Description:** Hvordan mon kodenissen klarer den her?
+
 **Hint:** Use the Force luke!
 
 HTML file containing the following relevant code:
@@ -19,7 +20,9 @@ Obviously just reverse the string.
 ## 50 - Små Skridt
 
 **Description:** Lad os skrue lidt op for sværhedsgraden.
+
 **Hint:** Baggrundslæsning: https://en.wikipedia.org/wiki/Bitwise_operation#XOR
+
 Nyttigt værktøj til CTF-opgaver: https://gchq.github.io/CyberChef/
 
 HTML file containing the following relevant code:
@@ -41,9 +44,11 @@ bin = b64decode("zsOz+/Nl3+Xy3/bp3+nf5+Hu5/0=")
 ## 200 - nisse.elf
 
 **Description:** En livlig nisse har lavet en crackme, som han rigtig gerne vil vise frem.
-**Hint:** Strings/Grep e.l. er ikke nok. Prøv at åbne filen i en disassembler, f.eks. Ida Pro Free. Assemblerkoden har symboler, dvs. programmørens funktionsnavne er synlige. Ud fra dette kan man udlede hvilken funktion, der tjekker for den mellemste del af flaget.
 
-Open in IDA, the first and third part of the flag should be obvious when using IDA, even more so if using the decompiler (F5). Relevant assembly under:
+**Hint:** 
+>Strings/Grep e.l. er ikke nok. Prøv at åbne filen i en disassembler, f.eks. Ida Pro Free. Assemblerkoden har symboler, dvs. programmørens funktionsnavne er synlige. Ud fra dette kan man udlede hvilken funktion, der tjekker for den mellemste del af flaget.
+
+Open in IDA, the first and third part of the flag should be obvious, even more so if using the decompiler (F5). Relevant assembly under:
 
 Part 1:
 `mov     edi, offset _ZZ15ErKodeordetSejtPKcE11s_flagStart ; "NC3{koden_er_fin__"`
