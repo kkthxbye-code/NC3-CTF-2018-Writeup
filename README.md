@@ -2,7 +2,10 @@
 
 I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly), ended in sixth place. These are some very quick writeups, so not very indepth.
 
-The three challenges I did not complete were: Breach, whosdaboss and analyse - svær.
+The three challenges I did not complete were: 
+* Breach (partial writeup)
+* whosdaboss
+* analyse - svær.
 
 # Reversing
 ## 10 - Indledning
