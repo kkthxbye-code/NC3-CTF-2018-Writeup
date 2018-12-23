@@ -201,7 +201,7 @@ You get a wireshark file again. Find the HTTP requests, until you find a file do
 To run the .exe you can use qemu-mips64-static file.elf <input>. The program outputs:
 
 >CRUnCH1NG ...
-Velfortjent flag: <124 char long string of characters>.
+>Velfortjent flag: <224 char long string of characters>.
 
 To reverse the file you can run the binary with qemu-mips64-static -g port file.elf <input> and then remotely attach from IDA Pro (Both gdb-multiarch and radare2 didn't work for me with mips64 big endian).
 
