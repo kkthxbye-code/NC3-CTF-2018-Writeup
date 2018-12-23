@@ -1,6 +1,8 @@
 # NC3-CTF-2018-Writeup
 
-I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly). These are some very quick writeups, so not very indepth.
+I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly), ended in sixth place. These are some very quick writeups, so not very indepth.
+
+The three challenges I did not complete were: Breach, whosdaboss and analyse - svær.
 
 # Reversing
 ## 10 - Indledning
@@ -156,11 +158,11 @@ Call the script with the data from $krypteret_indhold and start by guessing that
 Open the pcap file with wireshark. Find the first TCP package, right click -> follow -> tcp stream. Cycle the streams until you find this conversation:
 
 >har du noget til mig?
-guldjul
-eh?
-https://ghostbin.com/paste/jnmo7kys
-MUHAAAAA!!!
-:)
+>guldjul
+>eh?
+>https://ghostbin.com/paste/jnmo7kys
+>MUHAAAAA!!!
+>:)
 
 Open the link and use guldjul as password. The flag looks like this: AP3{avffre_cå_yvawra__iv_fre_serz_gvy_jevgrhcf}. This is clearly rot13. Just rot13 it and get the flag.
 
@@ -214,7 +216,8 @@ res = res-1
 After some trial and error, and after reading the hint that I missed, I first identified the password length, then I just bruteforced each character in the 23 char password, as the search space for each is pretty low (the result has to be between A and P). This gave the password julemandenkommertilbyen, which results in the following output:
 
 ```
-Velfortjent flag: OLEOKIANJLDOOAEFIJCMOGEDJCDHMNGIKEABMLGOLPBKOAEFIJCMOGEDJCDHMNGIJCDHPFFAJJDMHPNKBLLOHONLBCLHHLNOBMLJEDOGCJIMFMPJDAJFGPMKDAJFEGODCPIKHANFADKGGGMDBELBELOOCNIIFPPKDKJPFHPCAIKNHMNJBFLAHJNMCGIDFBPECDIGEKOPDOJLFLPOCOILFOPLCNIIFAPF
+Velfortjent flag:
+OLEOKIANJLDOOAEFIJCMOGEDJCDHMNGIKEABMLGOLPBKOAEFIJCMOGEDJCDHMNGIJCDHPFFAJJDMHPNKBLLOHONLBCLHHLNOBMLJEDOGCJIMFMPJDAJFGPMKDAJFEGODCPIKHANFADKGGGMDBELBELOOCNIIFPPKDKJPFHPCAIKNHMNJBFLAHJNMCGIDFBPECDIGEKOPDOJLFLPOCOILFOPLCNIIFAPF
 ```
 
 This was the night before the CTF ended, didn't have anymore time, so I just gave up.
@@ -273,6 +276,7 @@ Again, no idea.
 **Description:** Nisserne siger at man med fordel kan løse den anden agurk først. Men what, den her giver jo færre point, men skulle være sværere? Makes no sense at all
 
 **Solution:**
+
 You get a binary file. I have no idea how you are supposed to solve this, but it looks like some sort of struct. What I did was look at the hex, split it by '94', so you end up with something like this (header removed and the top line after):
 
 ```
@@ -296,6 +300,6 @@ You get a binary file. I have no idea how you are supposed to solve this, but it
     xx  zzyyyy
 ```
 
-xx in the above is an index, so sort (hex) by these values. zz is the length of the numbers after (2 in this case for two hex bytes). yyyy are the numbers we care about (after sort). Copy all these hex values, do hex to char on them, then you'll get something like this: 004e43337b5069636b6c655f5253757471. Then hex to char them again, and you'll get: NC3{Pickle_RSutq - which is the flag.
+xx in the above is an index, so sort (hex) by these values. zz is the length of the numbers after (2 in this case for two hex bytes). yyyy are the numbers we care about (after sort). Copy all these hex values, do hex to char on them, then you'll get something like this: 004e43337b5069636b6c655f5253757471. Then hex to char them again, and you'll get the flag.
 
 **Flag:** NC3{Pickle_RSutq
