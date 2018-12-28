@@ -443,3 +443,46 @@ Looks kinda [Brainfucky](https://en.wikipedia.org/wiki/Brainfuck). I the just go
 Looks like rot13. It's not though, it's rot12. I always just use https://www.rot13.com/ and scroll on the select box. Anyway, we got the flag.
 
 **Flag:** NC3{saa_snakker_vi_samme_sprog}
+
+## 350 - Billedchallenge.jpg
+
+**Description:** Noget er ikke som det plejer
+
+**Solution:**
+
+We get an image again, this time there is a missing or corrupted part in the bottom corner. This time binwalk is helpful however, and  reports multiple JPEG images:
+
+```
+➜  ~ binwalk Billedechallenge.jpg
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             JPEG image data, JFIF standard 1.01
+22327         0x5737          JPEG image data, JFIF standard 1.01
+22357         0x5755          TIFF image data, big-endian, offset of first image directory: 8
+22759         0x58E7          JPEG image data, JFIF standard 1.01
+22789         0x5905          TIFF image data, big-endian, offset of first image directory: 8
+26192         0x6650          JPEG image data, JFIF standard 1.01
+```
+
+Let's try to just extract all the ranges:
+
+```
+binwalk --dd=".*" Billedechallenge.jpg
+```
+
+Out of the chunks in the output folder, there are two images that open:
+
+58e7:
+![1](https://i.imgur.com/Aq3x2iC.jpg "1")
+
+6650:
+![2](https://i.imgur.com/8Xzs7u1.jpg "2")
+
+Okay, so we probably just need to rearrange the parts. The rest I just did in a hex editor by hand. Finding jpeg start of image (FF D8) and end of image (FF D9) byte sequences, and mixing and matching. One of the chunks was missing it's data, which was located elsewhere in the file, outside of the jpeg structs. Move it back and you get the last part of the flag:
+
+![3](https://i.imgur.com/OksVSnN.jpg "3")
+
+Put them together and you get the flag.
+
+**Flag:** NC3{billede_i_3_dele}
