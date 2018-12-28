@@ -358,3 +358,44 @@ Split by 94 again, and you get something like this:
 xx is the amount of bytes 1 or 2, which are denoted by zz and yy. Take every second value starting with 3030. Hex to char, hex to char again, then you get NC3{Pickle_R}q. The bottom is obviously in the wrong order, but I just guessed Pickle_Rick, which was correct, so didn't bother anymore.
 
 **Flag:** NC3{Pickle_Rick}
+
+## 100 - Detvarderengang
+
+**Description:** Flaget var gemt i tekstfilen, men nisserne drillede og slettede flaget i filen. Kan det stadig findes?
+
+**Solution:**
+
+You get a file named Detvarderengang. Run file on it:
+
+```
+DOS/MBR boot sector, code offset 0x52+2, OEM-ID "NTFS    ", sectors/cluster 8, Media descriptor 0xf8, sectors/track 1, heads 1, dos < 4.0 BootSector (0x80), FAT (1Y bit by descriptor); NTFS, sectors/track 1, sectors 9727, $MFT start cluster 405, $MFTMirror start cluster 2, bytes/RecordSegment 2^(-1*246), clusters/index block 1, serial number 0aace64a4ce646a91
+```
+
+It's a NTFS file. Mount it with (create mountpoint first):
+
+```
+mount -t ntfs -o loop,ro Detvarderengang.dd /mnt/Detvarderengang
+```
+
+There is a file called Flaget.txt which contains the text `Flaget er: `. 
+
+Grep for the flag in the raw file:
+
+```
+grep --text -a -F 'Flag' ~/Detvarderengang.dd
+```
+
+There's a lot of really long lines to throw you off, but the relevant result is at the bottom, so you can just ignore it.
+
+```
+Flaget er 078 067 051 123 102 105 108 121 115 116 101 109 095 105 110 116 101 116 095 112 114 111 098 108 101 109 125
+```
+
+Convert from byte to char:
+
+```
+>>> [print(chr(int(x)), end="") for x in "078 067 051 123 102 105 108 121 115 116 101 109 095 105 110 116 101 116 095 112 114 111 098 108 101 109 125".split(" ")]
+NC3{filystem_intet_problem}
+```
+
+**Flag:** NC3{filystem_intet_problem}
