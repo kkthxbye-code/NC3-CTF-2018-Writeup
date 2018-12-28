@@ -365,7 +365,7 @@ xx is the amount of bytes 1 or 2, which are denoted by zz and yy. Take every sec
 
 **Solution:**
 
-You get a file named Detvarderengang. Run file on it:
+You get a file named Detvarderengang.dd. Run file on it:
 
 ```
 DOS/MBR boot sector, code offset 0x52+2, OEM-ID "NTFS    ", sectors/cluster 8, Media descriptor 0xf8, sectors/track 1, heads 1, dos < 4.0 BootSector (0x80), FAT (1Y bit by descriptor); NTFS, sectors/track 1, sectors 9727, $MFT start cluster 405, $MFTMirror start cluster 2, bytes/RecordSegment 2^(-1*246), clusters/index block 1, serial number 0aace64a4ce646a91
@@ -399,3 +399,47 @@ NC3{filystem_intet_problem}
 ```
 
 **Flag:** NC3{filystem_intet_problem}
+
+## 200 - NC3.jpg
+
+**Description:** Et helt uskyldigt billede
+
+**Solution:**
+
+You get a boring image. Binwalk doesn't find anything hidden inside, so that usually means some sort og steganography. I just tried different tools until I tried https://github.com/Paradoxis/StegCracker which just runs steghide with a password list. So run it:
+
+```
+➜  ~ ./stegcracker NC3.jpg rockyou.txt
+StegCracker - (https://github.com/Paradoxis/StegCracker)
+Copyright (c) 2018 - Luke Paris (Paradoxis)
+
+Attacking file 'NC3.jpg' with wordlist 'rockyou.txt'..
+Successfully cracked file with password: password1
+Your file has been written to: NC3.jpg.out
+```
+
+The text in the output file is clearly base64, so decode:
+
+```
+base64 --decode NC3.jpg.out > output.txt
+```
+
+The output looks like this (longer than the sample here):
+
+```
+.-.-.- .-.-.- .-.-.- .-.-.- .-.-.- .-.-.- .-.-.-
+```
+
+It's pretty obviously morse, so hit up google and find the first and the best morse code translator. You then end up with:
+
+```
+....................!?.?...?.......?...............?....................?.?.?.?.!!?!.?.?.?........................!..?..........!.?.?.....!..?.?......................!.!!!!!!!!!!!.!!!!!!!!!!!!!!!!!!!!!!!!!!!.................................!.!!!!!!!!!!!!!!!!!!!!!.?.?.!..?.?........................!.............!.!!!!!!!!!!!!!!!!!!!!!!!.............!.!!!!!.!!!!!!!!!!!!!!!!!!!!!!!.?.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.?.!..?................!...............................!.?.......................................!..?.?......................................!.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.................!.!.?.............................!.................!.!!!!!!!!!!!..?!.....................!.!.!!!!!!!!!!!!!.?.........!.!!!!!!!!!!!!!!!..?!!!!!!!!!!!!!!!!!!!...........................!.?.!.................!.................!.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.!..?!!!!!!!!!.?.!!!!!.................!.!!!!!!!.....!.!!!!!!!..?....!.................!.
+```
+
+Looks kinda [Brainfucky](https://en.wikipedia.org/wiki/Brainfuck). I the just googled `esoteric language question mark exclamation mark`, first result (for me) was this [translator](https://www.dcode.fr/ook-language). The esolang is [Ook!](https://esolangs.org/wiki/ook!). Plop the text in the translator and you get:
+
+```Ri tobrh tzoush: BQ3{goo_gboyysf_jw_goaas_gdfcu}```
+
+Looks like rot13. It's not though, it's rot12. I always just use https://www.rot13.com/ and scroll on the select box. Anyway, we got the flag.
+
+**Flag:** NC3{saa_snakker_vi_samme_sprog}
