@@ -7,6 +7,30 @@ The three challenges I did not complete were:
 * whosdaboss
 * analyse - svær.
 
+**Table of Contents:**
+
+* [Reversing](#reversing)
+   * [10 - Indledning](#10---indledning)
+   * [50 - Små Skridt](#50---små-skridt)
+   * [200 - nisse.elf](#200---nisseelf)
+   * [400 - Fi1eCrypter](#400---fi1ecrypter)
+   * [450 - Kan du dekode?](#450---kan-du-dekode)
+* [Misc](#misc)
+   * [150 - breach_nem](#150---breach_nem)
+   * [350 - wallet](#350---wallet)
+   * [500 - breach](#500---breach)
+* [Analyse](#analyse)
+   * [150 - nem](#150---nem)
+   * [250 - whosdaboss](#250---whosdaboss)
+   * [400 - svær](#400---svær)
+* [Forensics](#forensics)
+   * [75 - agurker_svær](#75---agurker_svær)
+   * [150 - agurker](#150---agurker)
+   * [100 - Detvarderengang](#100---detvarderengang)
+   * [200 - NC3.jpg](#200---nc3jpg)
+   * [350 - Billedchallenge.jpg](#350---billedchallengejpg)
+* [boot2root](#boot2root)
+
 # Reversing
 ## 10 - Indledning
 
