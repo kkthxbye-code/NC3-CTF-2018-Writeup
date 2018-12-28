@@ -306,3 +306,55 @@ You get a binary file. I have no idea how you are supposed to solve this, but it
 xx in the above is an index, so sort (hex) by these values. zz is the length of the numbers after (2 in this case for two hex bytes). yyyy are the numbers we care about (after sort). Copy all these hex values, do hex to char on them, then you'll get something like this: 004e43337b5069636b6c655f5253757471. Then hex to char them again, and you'll get the flag.
 
 **Flag:** NC3{Pickle_RSutq
+
+## 150 - agurker
+
+**Description:** Julemanden har lidt svært med de der filtyper, som han bruger når han skal printe labels til den årlige produktion af syltede agurker med kommen. "Hvordan åbner jeg det her gylle?" tænkte Julemanden inden han gik ud for at gurgle munden i lagereddike. OBS KUN 2 FORSØG TIL DENNE OPGAVE
+
+**Solution:**
+
+Again, not sure how you are supposed to do it, but who cares :)
+
+Split by 94 again, and you get something like this:
+```
+800495a7000000000000007d
+948    c01 31
+948    c02 3030
+948    c01 32
+948    c02 3465
+948    c01 33
+948    c02 3433
+948    c01 34
+948    c02 3333
+948    c01 35
+948    c02 3762
+948    c01 36
+948    c02 3530
+948    c01 37
+948    c02 3639
+948    c01 38
+948    c02 3633
+948    c01 39
+948    c02 3662
+948    c02 3130
+948    c02 3663
+948    c02 3131
+948    c02 3635
+948    c02 3132
+948    c02 3566
+948    c02 3133
+948    c02 3532
+948    c02 3134
+94680e8c02 3135
+9468108c02 3136
+9468128c02 3137
+948    c02 3764
+948    c02 3138
+948    c02 3731
+94752e
+        xx zzyy
+```
+
+xx is the amount of bytes 1 or 2, which are denoted by zz and yy. Take every second value starting with 3030. Hex to char, hex to char again, then you get NC3{Pickle_R}q. The bottom is obviously in the wrong order, but I just guessed Pickle_Rick, which was correct, so didn't bother anymore.
+
+**Flag:** NC3{Pickle_Rick}
