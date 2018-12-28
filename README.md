@@ -486,3 +486,11 @@ Okay, so we probably just need to rearrange the parts. The rest I just did in a 
 Put them together and you get the flag.
 
 **Flag:** NC3{billede_i_3_dele}
+
+# boot2root
+
+Well these challenges were a mess. I'm not sure what went wrong, but it seems like NC3 didn't realize or forgot that everyone knows you can just tell grub to give you a root shell by adding `init=/bin/bash` to the boot script. So there was never a reason to get the IP of the machine (as NC3 wrote in the description). By looking at the challenges, you can clearly see the path they intended you to take, and that you were supposed to access the box over the network, gain user access and the get root access.
+
+So I'm not going to do a writeup, as I didn't sove them the intended way. There was one challenge where you had to reverse a packed .exe, but you just had to run upx -d on it, and the reverse it, and it was really not a big deal. One other flag was stored in mysql running on the machine (username/password in a .php script in /var/www somewhere). The last two flags just required you to su to a user and remount their encrypted files. Then the two flags were just sitting there to read.
+
+So yeah, disappointing really, it could have been some cool challenges.
