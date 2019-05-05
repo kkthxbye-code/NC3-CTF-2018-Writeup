@@ -1,6 +1,6 @@
 # NC3-CTF-2018-Writeup
 
-I participated in the NC3 Christmas CTF under the name telenor (I was the only one from telenor participating sadly, and I do not represent telenor in any official capacity), ended in sixth place. These are some very quick writeups, so not very indepth.
+I participated in the NC3 Christmas CTF, ended in sixth place. These are some very quick writeups, so not very indepth.
 
 The three challenges I did not complete were: 
 * Breach (partial writeup)
